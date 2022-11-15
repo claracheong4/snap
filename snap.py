@@ -12,7 +12,7 @@ class Snap(object):
         if len(players) < 1:
             raise ValueError("Number of players must be more than 1")
 
-        self.deck = Deck(n)
+        self.deck = Deck.create(n)
         self.match_condition = match_condition
         self.players = players
         self.prev_card = None

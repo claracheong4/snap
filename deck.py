@@ -9,11 +9,15 @@ class Card(namedtuple('Card', 'suit value')):
         return '({card.suit} {card.value})'.format(card=self)
 
 class Deck(object):
-    def __init__(self, n):
-        self.cards = [Card(value, suit) for value in Card.values for suit in Card.suits for _ in range(n)]
+    def __init__(self, cards):
+        self.cards = cards
+
+    @classmethod
+    def create(cls, n):
+        return Deck([Card(value, suit) for value in Card.values for suit in Card.suits for _ in range(n)])
 
     def __add__(self, other):
-        return self.__class__(self.cards + other.cards)
+        return Deck(self.cards + other.cards)
 
     def shuffle(self):
         randomizer.shuffle(self.cards)
@@ -24,7 +28,7 @@ class Deck(object):
     def __len__(self):
         return len(self.cards)
 
-    def __nonzero__(self):
+    def __bool__(self):
         return bool(self.cards)
 
     def __str__(self):
